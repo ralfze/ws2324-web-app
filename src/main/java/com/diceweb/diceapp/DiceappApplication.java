@@ -6,6 +6,7 @@ import java.util.Random;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,5 +39,16 @@ public class DiceappApplication {
 	@GetMapping("/dice/list")
 	public ArrayList<Dice> getAllRolls(){
 		return diceList;
+	}
+
+	@GetMapping("/dice/list/{id}")
+	public Dice getRollforId(@PathVariable int id){
+		Dice returnableDice = null;
+		for(Dice dice:diceList){
+			if(dice.getId() == id){
+				returnableDice = dice;
+			}
+		}
+		return returnableDice;
 	}
 }

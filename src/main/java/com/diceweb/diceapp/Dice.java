@@ -3,12 +3,16 @@ package com.diceweb.diceapp;
 import java.time.Instant;
 
 public class Dice {
+    private static int counter = 0;
+    private int id;
     private int rolledNumber;
     private int sizeOfTheDice;
     private Instant timeOfRoll;
     private String message;
 
     public Dice(){
+        this.id = counter;
+        counter++;
         this.timeOfRoll = Instant.now();
         this.sizeOfTheDice = 0;
         this.rolledNumber = 0;
@@ -16,10 +20,16 @@ public class Dice {
     }
 
     public Dice(int sizeOfTheDice, int rolledNumber, String message){
+        this.id = counter;
+        counter++;
         this.timeOfRoll = Instant.now();
         this.sizeOfTheDice = sizeOfTheDice;
         this.rolledNumber = rolledNumber;
         this.message = message;
+    }
+
+    public int getId(){
+        return this.id;
     }
 
     public int getRolledNumber(){
@@ -34,7 +44,7 @@ public class Dice {
         return this.timeOfRoll;
     }
 
-    public String message(){
+    public String getMessage(){
         return this.message;
     }
 }
