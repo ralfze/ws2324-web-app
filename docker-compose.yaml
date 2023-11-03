@@ -3,9 +3,12 @@ version: '3.1'
 services:
 
   backend:
-    image: webapp/myapp:latest
+    #image: webapp/myapp:latest
+    build:  
+      context: ./
+      dockerfile: ./backend/Dockerfile
     ports:
-      - 8080:8080
+      - 8081:8081
     environment:
       - OTEL_SERVICE_NAME=backend-otel
       # - OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318

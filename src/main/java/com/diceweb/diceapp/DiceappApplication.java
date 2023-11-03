@@ -22,7 +22,7 @@ public class DiceappApplication {
 	}
 
 	@WithSpan
-	@GetMapping("/dice")
+	@GetMapping("/dices/roll")
 	public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size){
 		Random random = new Random();
 		String message;
@@ -40,13 +40,13 @@ public class DiceappApplication {
 	}
 
 	@WithSpan
-	@GetMapping("/dice/list")
+	@GetMapping("/dices")
 	public ArrayList<Dice> getAllRolls(){
 		return diceList;
 	}
 
 	@WithSpan
-	@GetMapping("/dice/list/{id}")
+	@GetMapping("/dices/{id}")
 	public Dice getRollforId(@SpanAttribute("id") @PathVariable int id){
 		Dice returnableDice = null;
 		for(Dice dice:diceList){
