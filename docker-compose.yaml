@@ -15,6 +15,13 @@ services:
       - OTEL_TRACES_EXPORTER=jaeger
       - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger-service:14250
 
+  mongo:
+    image: mongo:jammy
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+
   collector:
     image: otel/opentelemetry-collector:latest
     command: [ "--config=/etc/otel-collector-config.yaml" ]

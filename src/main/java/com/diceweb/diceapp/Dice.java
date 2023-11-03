@@ -2,17 +2,20 @@ package com.diceweb.diceapp;
 
 import java.time.Instant;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "dices")
 public class Dice {
-    private static int counter = 0;
-    private int id;
+    @Id
+    private long id;
+
     private int rolledNumber;
     private int sizeOfTheDice;
     private Instant timeOfRoll;
     private String message;
 
     public Dice(){
-        this.id = counter;
-        counter++;
         this.timeOfRoll = Instant.now();
         this.sizeOfTheDice = 0;
         this.rolledNumber = 0;
@@ -20,15 +23,13 @@ public class Dice {
     }
 
     public Dice(int sizeOfTheDice, int rolledNumber, String message){
-        this.id = counter;
-        counter++;
         this.timeOfRoll = Instant.now();
         this.sizeOfTheDice = sizeOfTheDice;
         this.rolledNumber = rolledNumber;
         this.message = message;
     }
 
-    public int getId(){
+    public long getId(){
         return this.id;
     }
 
@@ -46,5 +47,29 @@ public class Dice {
 
     public String getMessage(){
         return this.message;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setRolledNumber(int rolledNumber) {
+        this.rolledNumber = rolledNumber;
+    }
+
+    public int getSizeOfTheDice() {
+        return sizeOfTheDice;
+    }
+
+    public void setSizeOfTheDice(int sizeOfTheDice) {
+        this.sizeOfTheDice = sizeOfTheDice;
+    }
+
+    public void setTimeOfRoll(Instant timeOfRoll) {
+        this.timeOfRoll = timeOfRoll;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
