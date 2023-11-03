@@ -10,17 +10,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.opentelemetry.instrumentation.annotations.SpanAttribute;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
+
 @SpringBootApplication
 @RestController
 public class DiceappApplication {
 	private ArrayList<Dice> diceList = new ArrayList<>();
-
 	public static void main(String[] args) {
 		SpringApplication.run(DiceappApplication.class, args);
 	}
 
+	@WithSpan
 	@GetMapping("/dice")
-	public int rollTheDice(@RequestParam(required = false, defaultValue = "6") int size){
+	public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size){
 		Random random = new Random();
 		String message;
 		int number = (random.nextInt(size) + 1);
@@ -36,13 +39,15 @@ public class DiceappApplication {
 		return number;
 	}
 
+	@WithSpan
 	@GetMapping("/dice/list")
 	public ArrayList<Dice> getAllRolls(){
 		return diceList;
 	}
 
+	@WithSpan
 	@GetMapping("/dice/list/{id}")
-	public Dice getRollforId(@PathVariable int id){
+	public Dice getRollforId(@SpanAttribute("id") @PathVariable int id){
 		Dice returnableDice = null;
 		for(Dice dice:diceList){
 			if(dice.getId() == id){

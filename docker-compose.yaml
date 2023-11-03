@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  backend:
+    image: webapp/myapp:latest
+    ports:
+      - 8080:8080
+    environment:
+      - OTEL_SERVICE_NAME=todoui-otel
+      # - OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318
+      - OTEL_TRACES_EXPORTER=jaeger
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger-service:14250
+
+  collector:
+    image: otel/opentelemetry-collector:latest
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./otel-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"
+    depends_on:
+      - jaeger-service
+
+  jaeger-service:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "14250"
