@@ -7,7 +7,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      - OTEL_SERVICE_NAME=todoui-otel
+      - OTEL_SERVICE_NAME=backend-otel
       # - OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318
       - OTEL_TRACES_EXPORTER=jaeger
       - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger-service:14250
