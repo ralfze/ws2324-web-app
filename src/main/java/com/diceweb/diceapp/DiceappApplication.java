@@ -85,6 +85,6 @@ public class DiceappApplication{
 	@WithSpan
 	@GetMapping("/dices")
 	public List<Dice> getAllRolls(){
-		return diceRepository.findAll();
+		return (List<Dice>) diceRepository.findAll();
 	}
 }

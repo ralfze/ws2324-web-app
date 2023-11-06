@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "dices")
-public class DiceItem {
+public class Dice {
     @Id
     private Long id;
 
@@ -15,14 +15,14 @@ public class DiceItem {
     private Instant timeOfRoll;
     private String message;
 
-    public DiceItem(){
+    public Dice(){
         this.timeOfRoll = Instant.now();
         this.sizeOfTheDice = 0;
         this.rolledNumber = 0;
         this.message = "Empty roll";
     }
 
-    public DiceItem(int sizeOfTheDice, int rolledNumber, String message){
+    public Dice(int sizeOfTheDice, int rolledNumber, String message){
         this.timeOfRoll = Instant.now();
         this.sizeOfTheDice = sizeOfTheDice;
         this.rolledNumber = rolledNumber;
