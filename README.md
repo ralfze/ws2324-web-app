@@ -87,3 +87,8 @@ To run the application and its associated PostgreSQL database using Docker Compo
 6. Use your preferred API client (e.g., Postman, curl) to interact with the API endpoints as described in the documentation.
 
 
+## Compile Backend
+./mvnw clean install 
+
+### Build run
+./mvnw spring-boot:run
