@@ -92,3 +92,4 @@ To run the application and its associated PostgreSQL database using Docker Compo
 
 ### Build run
 ./mvnw spring-boot:run
+

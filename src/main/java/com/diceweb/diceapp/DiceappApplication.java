@@ -19,72 +19,85 @@ import io.opentelemetry.instrumentation.annotations.WithSpan;
 @SpringBootApplication
 @RestController
 @EnableMongoRepositories
-public class DiceappApplication{
+public class DiceappApplication {
 	@Autowired
 	private DiceRepository diceRepository;
+
 	// private ArrayList<Dice> diceList = new ArrayList<>();
 	public static void main(String[] args) {
 		SpringApplication.run(DiceappApplication.class, args);
 	}
+
+	@WithSpan
+	@GetMapping("/")
+	public String welcome() {
+		String msg = "Welcome on the dice-web-app.";
+		return msg;
+	}
+
 	/*
-	@WithSpan
-	@GetMapping("/dices/roll")
-	public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size){
-		Random random = new Random();
-		String message;
-		int number = (random.nextInt(size) + 1);
-		// Decide on a message for the roll
-		if(number == size){
-			message = "You rolled the maximum number of " + size + ".";
-		}else{
-			message = "You rolled the number " + number + ".";
-		}
-		// Create Dice Object
-		Dice dice = new Dice(size, number, message);
-		diceList.add(dice);
-		return number;
-	}
-
-	@WithSpan
-	@GetMapping("/dices")
-	public ArrayList<Dice> getAllRolls(){
-		return diceList;
-	}
-
-	@WithSpan
-	@GetMapping("/dices/{id}")
-	public Dice getRollforId(@SpanAttribute("id") @PathVariable int id){
-		Dice returnableDice = null;
-		for(Dice dice:diceList){
-			if(dice.getId() == id){
-				returnableDice = dice;
-			}
-		}
-		return returnableDice;
-	}
-	*/
+	 * @WithSpan
+	 * 
+	 * @GetMapping("/dices/roll")
+	 * public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false,
+	 * defaultValue = "6") int size){
+	 * Random random = new Random();
+	 * String message;
+	 * int number = (random.nextInt(size) + 1);
+	 * // Decide on a message for the roll
+	 * if(number == size){
+	 * message = "You rolled the maximum number of " + size + ".";
+	 * }else{
+	 * message = "You rolled the number " + number + ".";
+	 * }
+	 * // Create Dice Object
+	 * Dice dice = new Dice(size, number, message);
+	 * diceList.add(dice);
+	 * return number;
+	 * }
+	 * 
+	 * @WithSpan
+	 * 
+	 * @GetMapping("/dices")
+	 * public ArrayList<Dice> getAllRolls(){
+	 * return diceList;
+	 * }
+	 * 
+	 * @WithSpan
+	 * 
+	 * @GetMapping("/dices/{id}")
+	 * public Dice getRollforId(@SpanAttribute("id") @PathVariable int id){
+	 * Dice returnableDice = null;
+	 * for(Dice dice:diceList){
+	 * if(dice.getId() == id){
+	 * returnableDice = dice;
+	 * }
+	 * }
+	 * return returnableDice;
+	 * }
+	 */
 	@WithSpan
 	@GetMapping
-	public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size){
+	public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size) {
 		Random random = new Random();
 		String message;
 		int number = (random.nextInt(size) + 1);
 		// Decide on a message for the roll
-		if(number == size){
+		if (number == size) {
 			message = "You rolled the maximum number of " + size + ".";
-		}else{
+		} else {
 			message = "You rolled the number " + number + ".";
 		}
 		// Create Dice Object
 		Dice dice = new Dice(size, number, message);
-		//diceList.add(dice);
-		diceRepository.save(dice);		
+		// diceList.add(dice);
+		diceRepository.save(dice);
 		return number;
 	}
 
 	@WithSpan
 	@GetMapping("/dices")
-	public List<Dice> getAllRolls(){
+	public List<Dice> getAllRolls() {
 		return (List<Dice>) diceRepository.findAll();
 	}
 }
