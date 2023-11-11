@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 services:
 
@@ -7,19 +7,27 @@ services:
     build:  
       context: ./
       dockerfile: ./backend/Dockerfile
+    container_name: dice-web-backend
+    networks:
+      - backend
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
-      - OTEL_SERVICE_NAME=backend-otel
-      # - OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318
-      - OTEL_TRACES_EXPORTER=jaeger
-      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger-service:14250
+      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongo:27017
+      SPRING_DATA_MONGODB_DATABASE: dicedb
+      OTEL_SERVICE_NAME: backend-otel
+      # OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
+      OTEL_TRACES_EXPORTER: jaeger
+      OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-service:14250
 
   mongo:
     image: mongo:jammy
+    container_name: mongo
     restart: always
+    networks:
+      - backend
     ports:
-      - 27017:27017
+      - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -29,6 +37,8 @@ services:
     command: [ "--config=/etc/otel-collector-config.yaml" ]
     volumes:
       - ./otel-config.yaml:/etc/otel-collector-config.yaml
+    networks:
+      - backend
     ports:
       - "4317:4317"
     depends_on:
@@ -36,6 +46,12 @@ services:
 
   jaeger-service:
     image: jaegertracing/all-in-one:latest
+    networks:
+      - backend
     ports:
       - "16686:16686"
       - "14250"
+
+networks:
+  frontend:
+  backend:

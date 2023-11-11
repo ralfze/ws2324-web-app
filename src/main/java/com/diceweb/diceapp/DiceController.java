@@ -23,10 +23,10 @@ public class DiceController{
     @Autowired
 	private DiceRepository diceRepository;
 
-    @WithSpan
+	//@WithSpan
 	@GetMapping("/dices")
 	public ResponseEntity<List<Dice>> getAllDices() {
-		List<Dice> diceList = (List<Dice>) diceRepository.findAll();
+		List<Dice> diceList = diceRepository.findAll();
         if (!diceList.isEmpty()) {
             return ResponseEntity.ok(diceList);
         }
@@ -34,7 +34,7 @@ public class DiceController{
 	}
 
     /* CRUD Dice Methods */
-    @WithSpan
+    //@WithSpan
 	@GetMapping("/dices/{id}")
 	public ResponseEntity<Dice> getDiceById(@PathVariable Long id) {
         Dice diceItem = diceRepository.findById(id).orElse(null);
@@ -43,15 +43,17 @@ public class DiceController{
         }
         return ResponseEntity.notFound().build();
 	}
-
-    @PostMapping("/dices/{message}")
-	public ResponseEntity<Dice> CreateDice(@PathVariable String message){
+	
+	//@WithSpan
+    @PostMapping("/dices")
+	public ResponseEntity<Dice> CreateDice(){
 		Dice item = new Dice();
-		item.setMessage(message);
+		// item.setMessage(message);
 		diceRepository.save(item);
 		return ResponseEntity.status(HttpStatus.CREATED).body(item);
 	}
 
+	//@WithSpan
     @PutMapping("/dices/{id}/{message}")
 	ResponseEntity<Dice> UpdateDice(@PathVariable Long id, @PathVariable String message){
         Dice existingItem = diceRepository.findById(id).orElse(null);
@@ -72,7 +74,7 @@ public class DiceController{
         }
         return ResponseEntity.notFound().build();
 	}
-
+	
 	/*
 	 * @WithSpan
 	 * 
@@ -113,7 +115,8 @@ public class DiceController{
 	 * }
 	 * return returnableDice;
 	 * }
-	 */
+	*/
+	/* 
 	@WithSpan
 	@GetMapping
 	public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size) {
@@ -131,7 +134,6 @@ public class DiceController{
 		// diceList.add(dice);
 		diceRepository.save(dice);
 		return number;
-	}
-
-
+	}*/
 }
+ 

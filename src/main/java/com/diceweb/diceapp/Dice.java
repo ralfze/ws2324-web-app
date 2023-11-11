@@ -12,45 +12,36 @@ public class Dice {
 
     private int rolledNumber;
     private int sizeOfTheDice;
-    private Instant timeOfRoll;
+    private Instant created;
+    private Instant modified;
     private String message;
 
     public Dice(){
-        this.timeOfRoll = Instant.now();
+        this.created = Instant.now();
+        this.modified = this.created;
         this.sizeOfTheDice = 0;
         this.rolledNumber = 0;
         this.message = "Empty roll";
     }
 
     public Dice(int sizeOfTheDice, int rolledNumber, String message){
-        this.timeOfRoll = Instant.now();
+        this.created = Instant.now();
+        this.modified = this.created;
         this.sizeOfTheDice = sizeOfTheDice;
         this.rolledNumber = rolledNumber;
         this.message = message;
     }
 
-    public Long getId(){
-        return this.id;
-    }
-
-    public int getRolledNumber(){
-        return this.rolledNumber;
-    }
-
-    public int getSizeOfDice(){
-        return this.sizeOfTheDice;
-    }
-
-    public Instant getTimeOfRoll(){
-        return this.timeOfRoll;
-    }
-
-    public String getMessage(){
-        return this.message;
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getRolledNumber() {
+        return rolledNumber;
     }
 
     public void setRolledNumber(int rolledNumber) {
@@ -65,11 +56,28 @@ public class Dice {
         this.sizeOfTheDice = sizeOfTheDice;
     }
 
-    public void setTimeOfRoll(Instant timeOfRoll) {
-        this.timeOfRoll = timeOfRoll;
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public Instant getModified() {
+        return modified;
+    }
+
+    public void setModified(Instant modified) {
+        this.modified = modified;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

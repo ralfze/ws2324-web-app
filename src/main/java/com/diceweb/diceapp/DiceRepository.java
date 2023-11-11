@@ -1,7 +1,9 @@
 package com.diceweb.diceapp;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface DiceRepository extends CrudRepository<Dice, Long>{
+@Repository
+public interface DiceRepository extends MongoRepository<Dice, Long>{
 
 }

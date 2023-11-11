@@ -93,3 +93,9 @@ To run the application and its associated PostgreSQL database using Docker Compo
 ### Build run
 ./mvnw spring-boot:run
 
+### Delete Docker Image
+docker image rm ws2324-web-app-backend
+
+### Delete Docker Container after stop
+docker compose up --force-recreate --no-cache
+docker compose down
