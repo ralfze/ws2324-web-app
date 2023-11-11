@@ -1,7 +1,6 @@
 package com.diceweb.diceapp;
 
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,65 +15,72 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
+import jakarta.websocket.server.PathParam;
 
 @RestController
-public class DiceController{
-    // mongoDB Repository
-    @Autowired
+public class DiceController {
+	// mongoDB Repository
+	@Autowired
 	private DiceRepository diceRepository;
 
-	//@WithSpan
+	@WithSpan
 	@GetMapping("/dices")
 	public ResponseEntity<List<Dice>> getAllDices() {
 		List<Dice> diceList = diceRepository.findAll();
-        if (!diceList.isEmpty()) {
-            return ResponseEntity.ok(diceList);
-        }
-        return ResponseEntity.notFound().build();
+		if (!diceList.isEmpty()) {
+			return ResponseEntity.ok(diceList);
+		}
+		return ResponseEntity.notFound().build();
 	}
 
-    /* CRUD Dice Methods */
-    //@WithSpan
+	/* CRUD Dice Methods */
+	@WithSpan
 	@GetMapping("/dices/{id}")
-	public ResponseEntity<Dice> getDiceById(@PathVariable Long id) {
-        Dice diceItem = diceRepository.findById(id).orElse(null);
-        if (diceItem != null) {
-            return ResponseEntity.ok(diceItem);
-        }
-        return ResponseEntity.notFound().build();
+	public ResponseEntity<Dice> getDiceById(@PathVariable String id) {
+		Dice diceItem = diceRepository.findById(id).orElse(null);
+		if (diceItem != null) {
+			return ResponseEntity.ok(diceItem);
+		}
+		return ResponseEntity.notFound().build();
 	}
-	
-	//@WithSpan
-    @PostMapping("/dices")
-	public ResponseEntity<Dice> CreateDice(){
-		Dice item = new Dice();
-		// item.setMessage(message);
+
+	@WithSpan
+	@PostMapping("/dices")
+	public ResponseEntity<Dice> CreateDice(
+			@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size) {
+		Dice item = new Dice(size);
 		diceRepository.save(item);
 		return ResponseEntity.status(HttpStatus.CREATED).body(item);
 	}
 
-	//@WithSpan
-    @PutMapping("/dices/{id}/{message}")
-	ResponseEntity<Dice> UpdateDice(@PathVariable Long id, @PathVariable String message){
-        Dice existingItem = diceRepository.findById(id).orElse(null);
-        if (existingItem != null) {
-            existingItem.setMessage(message);
-            diceRepository.save(existingItem);
-            return ResponseEntity.status(HttpStatus.OK).body(existingItem);
-        }
-        return ResponseEntity.notFound().build();
+	/*
+	 * Create a custom message for a dice with id
+	 */
+	@WithSpan
+	@PutMapping("/dices/{id}")
+	ResponseEntity<Dice> UpdateDice(@PathVariable String id,
+			@SpanAttribute("message") @RequestParam(required = true) String message) {
+		Dice existingItem = diceRepository.findById(id).orElse(null);
+		if (existingItem != null) {
+			existingItem.setMessage(message);
+			existingItem.updateTime();
+			diceRepository.save(existingItem);
+			return ResponseEntity.status(HttpStatus.OK).body(existingItem);
+		}
+		return ResponseEntity.notFound().build();
 	}
 
-    @DeleteMapping("/dices/{id}")
-	ResponseEntity<Dice> DeleteDice(@PathVariable Long id){
-        Dice item = diceRepository.findById(id).orElse(null);
-        if (item != null) {
-            diceRepository.delete(item);
-            return ResponseEntity.status(HttpStatus.OK).body(item);
-        }
-        return ResponseEntity.notFound().build();
+	@WithSpan
+	@DeleteMapping("/dices/{id}")
+	ResponseEntity<Dice> DeleteDice(@PathVariable String id) {
+		Dice item = diceRepository.findById(id).orElse(null);
+		if (item != null) {
+			diceRepository.delete(item);
+			return ResponseEntity.status(HttpStatus.OK).body(item);
+		}
+		return ResponseEntity.notFound().build();
 	}
-	
+
 	/*
 	 * @WithSpan
 	 * 
@@ -115,25 +121,27 @@ public class DiceController{
 	 * }
 	 * return returnableDice;
 	 * }
-	*/
-	/* 
-	@WithSpan
-	@GetMapping
-	public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false, defaultValue = "6") int size) {
-		Random random = new Random();
-		String message;
-		int number = (random.nextInt(size) + 1);
-		// Decide on a message for the roll
-		if (number == size) {
-			message = "You rolled the maximum number of " + size + ".";
-		} else {
-			message = "You rolled the number " + number + ".";
-		}
-		// Create Dice Object
-		Dice dice = new Dice(size, number, message);
-		// diceList.add(dice);
-		diceRepository.save(dice);
-		return number;
-	}*/
+	 */
+	/*
+	 * @WithSpan
+	 * 
+	 * @GetMapping
+	 * public int rollTheDice(@SpanAttribute("size") @RequestParam(required = false,
+	 * defaultValue = "6") int size) {
+	 * Random random = new Random();
+	 * String message;
+	 * int number = (random.nextInt(size) + 1);
+	 * // Decide on a message for the roll
+	 * if (number == size) {
+	 * message = "You rolled the maximum number of " + size + ".";
+	 * } else {
+	 * message = "You rolled the number " + number + ".";
+	 * }
+	 * // Create Dice Object
+	 * Dice dice = new Dice(size, number, message);
+	 * // diceList.add(dice);
+	 * diceRepository.save(dice);
+	 * return number;
+	 * }
+	 */
 }
- 

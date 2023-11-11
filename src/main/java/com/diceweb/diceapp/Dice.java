@@ -1,6 +1,7 @@
 package com.diceweb.diceapp;
 
 import java.time.Instant;
+import java.util.Random;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "dices")
 public class Dice {
     @Id
-    private Long id;
+    private String id;
 
     private int rolledNumber;
     private int sizeOfTheDice;
@@ -16,7 +17,7 @@ public class Dice {
     private Instant modified;
     private String message;
 
-    public Dice(){
+    public Dice() {
         this.created = Instant.now();
         this.modified = this.created;
         this.sizeOfTheDice = 0;
@@ -24,19 +25,38 @@ public class Dice {
         this.message = "Empty roll";
     }
 
-    public Dice(int sizeOfTheDice, int rolledNumber, String message){
+    public Dice(int sizeOfTheDice) {
         this.created = Instant.now();
         this.modified = this.created;
         this.sizeOfTheDice = sizeOfTheDice;
-        this.rolledNumber = rolledNumber;
-        this.message = message;
+        this.rolledNumber = rollTheDice(sizeOfTheDice);
+        this.message = createMessage(this.rolledNumber, sizeOfTheDice);
     }
 
-    public Long getId() {
+    private int rollTheDice(int sizeOfTheDice) {
+        return (new Random().nextInt(sizeOfTheDice) + 1);
+    }
+
+    private String createMessage(int rolledNumber, int sizeOfTheDice) {
+        String msg = "No roll happened.";
+        // Decide on a message for the roll
+        if (rolledNumber == sizeOfTheDice) {
+            msg = "You rolled the maximum number of " + sizeOfTheDice + ".";
+        } else {
+            msg = "You rolled the number " + rolledNumber + ".";
+        }
+        return msg;
+    }
+
+    public void updateTime(){
+        this.modified = Instant.now();
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

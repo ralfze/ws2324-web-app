@@ -97,5 +97,5 @@ To run the application and its associated PostgreSQL database using Docker Compo
 docker image rm ws2324-web-app-backend
 
 ### Delete Docker Container after stop
-docker compose up --force-recreate --no-cache
+docker compose up --force-recreate
 docker compose down
