@@ -1,6 +1,7 @@
 package com.diceweb.diceapp;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,10 +59,26 @@ public class DiceController {
 	@WithSpan
 	@PutMapping("/dices/{id}")
 	ResponseEntity<Dice> UpdateDice(@PathVariable String id,
-			@SpanAttribute("message") @RequestParam(required = true) String message) {
+			@SpanAttribute("message") @RequestParam(required = false) String message) {
 		Dice existingItem = diceRepository.findById(id).orElse(null);
 		if (existingItem != null) {
 			existingItem.setMessage(message);
+			existingItem.updateTime();
+			diceRepository.save(existingItem);
+			return ResponseEntity.status(HttpStatus.OK).body(existingItem);
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	/*
+	 * Create a path to reroll dices
+	 */
+	@WithSpan
+	@PutMapping("/dices/{id}/reroll")
+	ResponseEntity<Dice> UpdateDice(@PathVariable String id) {
+		Dice existingItem = diceRepository.findById(id).orElse(null);
+		if (existingItem != null) {
+			existingItem.reroll();
 			existingItem.updateTime();
 			diceRepository.save(existingItem);
 			return ResponseEntity.status(HttpStatus.OK).body(existingItem);

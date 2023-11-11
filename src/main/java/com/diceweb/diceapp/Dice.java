@@ -36,6 +36,9 @@ public class Dice {
     private int rollTheDice(int sizeOfTheDice) {
         return (new Random().nextInt(sizeOfTheDice) + 1);
     }
+    public void reroll(){
+        this.rolledNumber = this.rollTheDice(this.sizeOfTheDice);
+    }
 
     private String createMessage(int rolledNumber, int sizeOfTheDice) {
         String msg = "No roll happened.";
