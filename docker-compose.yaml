@@ -10,6 +10,7 @@ services:
     container_name: dice-web-backend
     networks:
       - backend
+      - frontend
     ports:
       - "8081:8081"
     environment:
