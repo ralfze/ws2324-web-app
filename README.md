@@ -93,15 +93,18 @@ To run the application and its associated PostgreSQL database using Docker Compo
 ### Build run
 ./mvnw spring-boot:run
 
-### Delete Docker Image
-docker image rm ws2324-web-app-backend
-
 ### Delete Docker Container after stop
 docker compose up --force-recreate
 docker compose down
+#### Delete Docker Image
+docker image rm ws2324-web-app-backend
+
 
 ## Run React UI
 npm start
 
 ### Package React UI
 npm run build
+
+### Components used for UI
+npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
