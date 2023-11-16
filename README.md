@@ -96,8 +96,8 @@ To run the application and its associated PostgreSQL database using Docker Compo
 ### Delete Docker Container after stop
 docker compose up --force-recreate
 docker compose down
-#### Delete Docker Image
-docker image rm ws2324-web-app-backend
+#### Delete Docker Images
+docker image rm dice-web-app/backend && docker image rm dice-web-app/frontend
 
 
 ## Run React UI

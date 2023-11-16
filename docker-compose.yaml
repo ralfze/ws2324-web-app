@@ -1,9 +1,26 @@
 version: '3.1'
 
 services:
+  frontend:
+    image: dice-web-app/frontend:latest
+    build:  
+      context: ./
+      dockerfile: ./diceui/Dockerfile
+    container_name: dice-web-frontend
+    networks:
+      - frontend
+    ports:
+      - "3000:3000"
+    #environment:
+      #OTEL_SERVICE_NAME: backend-otel
+      #OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
+      #OTEL_TRACES_EXPORTER: jaeger
+      #OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-service:14250
+    depends_on:
+      - backend
 
   backend:
-    #image: webapp/myapp:latest
+    image: dice-web-app/backend:latest
     build:  
       context: ./
       dockerfile: ./backend/Dockerfile
@@ -14,12 +31,14 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongo:27017
+      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongo:27017/
       SPRING_DATA_MONGODB_DATABASE: dicedb
       OTEL_SERVICE_NAME: backend-otel
       # OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
       OTEL_TRACES_EXPORTER: jaeger
       OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-service:14250
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo:jammy
