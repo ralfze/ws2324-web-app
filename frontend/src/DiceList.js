@@ -57,7 +57,7 @@ function DiceList() {
 
     return (
         <SimpleGrid columns={1} spacing={4}>
-            {diceList.map(dice => <DiceCard dice={dice}>{dice}</DiceCard>)}
+            {diceList.toReversed().map(dice => <DiceCard dice={dice}>{dice}</DiceCard>)}
         </SimpleGrid>
     );
 }

@@ -1,5 +1,6 @@
 import './App.css';
 import DiceList from './DiceList';
+import { useState } from 'react';
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
@@ -7,18 +8,24 @@ import axios from 'axios';
 import { Card, CardHeader, CardBody, CardFooter, Text } from '@chakra-ui/react'
 import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button } from '@chakra-ui/react'
 
-const baseURL = "http://localhost:8081/dices";
-function handleClick({ sizeOfTheDice }) {
-  //alert('You clicked me!');
-  if (sizeOfTheDice !== null)
-    axios.post(baseURL + "?size=" + 6)
-      .then(
-        (response) => { console.log(response) }
-      );
-
-}
 
 function App() {
+  const [value, setValue] = useState(6)
+
+  const baseURL = "http://localhost:8081/dices";
+  function handleClick(sizeOfTheDice) {
+    //alert('You clicked me!' + sizeOfTheDice);
+    if (sizeOfTheDice !== null)
+      axios.post(baseURL + "?size=" + sizeOfTheDice)
+        .then(
+          (response) => {
+            console.log(response);
+            // Update page
+            window.location.reload(false); 
+          }
+        );
+
+  }
   return (
     <ChakraProvider>
       <div className="App">
@@ -38,7 +45,7 @@ function App() {
             <CardBody>
               <Text py='2'>
                 Size of the dice:
-                <NumberInput defaultValue={6} min={2} max={1000}>
+                <NumberInput defaultValue={6} min={2} max={1000} value={value} onChange={(newValue) => setValue(newValue)}>
                   <NumberInputField />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
@@ -48,7 +55,7 @@ function App() {
               </Text>
             </CardBody>
             <CardFooter>
-              <Button variant='solid' colorScheme='blue' onClick={handleClick(6)}>
+              <Button variant='solid' colorScheme='blue' onClick={() => handleClick(value) }>
                 Roll
               </Button>
             </CardFooter>
