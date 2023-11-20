@@ -9,10 +9,10 @@ import io.opentelemetry.instrumentation.annotations.WithSpan;
 
 @SpringBootApplication
 @RestController
-public class DiceappApplication {
+public class DiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DiceappApplication.class, args);
+		SpringApplication.run(DiceApplication.class, args);
 	}
 
 	@WithSpan
