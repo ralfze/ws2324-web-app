@@ -8,7 +8,7 @@ function handleClick() {
     alert('You clicked me!');
   }
 
-function DiceCard() {
+function DiceCard({dice}) {
     return (
         <Card
             direction={{ base: 'column', sm: 'row' }}
@@ -27,12 +27,12 @@ function DiceCard() {
                     <Heading size='md'>Dice d</Heading>
 
                     <Text py='2'>
-                        Rolled Number:
+                        Rolled Number: {dice.rolledNumber}
                     </Text>
 
                     <Text py='2'>
                         Size of the dice:
-                        <NumberInput defaultValue={6} min={2} max={1000}>
+                        <NumberInput defaultValue={dice.sizeOfTheDice} min={2} max={1000}>
                             <NumberInputField />
                             <NumberInputStepper>
                                 <NumberIncrementStepper />
@@ -42,15 +42,15 @@ function DiceCard() {
                     </Text>
 
                     <Text py='2'>
-                        Message:
+                        Message: {dice.message}
                     </Text>
 
                     <Text py='2'>
-                        Modified:
+                        Modified: {dice.modified}
                     </Text>
 
                     <Text py='2'>
-                        Created:
+                        Created: {dice.created}
                     </Text>
                 </CardBody>
 

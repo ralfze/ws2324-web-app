@@ -5,9 +5,9 @@ FROM node:18
 WORKDIR /app/
 
 # Copy all folders
-COPY diceui/public/ /app/public
-COPY diceui/src/ /app/src
-COPY diceui/package.json /app/
+COPY frontend/public/ /app/public
+COPY frontend/src/ /app/src
+COPY frontend/package.json /app/
 
 # Install dependecies
 RUN npm install

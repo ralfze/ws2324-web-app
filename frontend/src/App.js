@@ -3,13 +3,20 @@ import DiceList from './DiceList';
 // 1. import `ChakraProvider` component
 import { ChakraProvider } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
+import axios from 'axios';
 import { Card, CardHeader, CardBody, CardFooter, Text } from '@chakra-ui/react'
-import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button} from '@chakra-ui/react'
+import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button } from '@chakra-ui/react'
 
-function handleClick() {
-  alert('You clicked me!');
+const baseURL = "http://localhost:8081/dices";
+function handleClick({ sizeOfTheDice }) {
+  //alert('You clicked me!');
+  if (sizeOfTheDice !== null)
+    axios.post(baseURL + "?size=" + 6)
+      .then(
+        (response) => { console.log(response) }
+      );
+
 }
-
 
 function App() {
   return (
@@ -41,7 +48,7 @@ function App() {
               </Text>
             </CardBody>
             <CardFooter>
-              <Button variant='solid' colorScheme='blue' onClick={handleClick}>
+              <Button variant='solid' colorScheme='blue' onClick={handleClick(6)}>
                 Roll
               </Button>
             </CardFooter>
