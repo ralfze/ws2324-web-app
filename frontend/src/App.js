@@ -22,10 +22,11 @@ function App() {
             console.log(response);
             // Update page
             window.location.reload(false);
+            //forceUpdate();
           }
         );
-
   }
+
   return (
     <ChakraProvider>
       <div className="App">
@@ -66,7 +67,6 @@ function App() {
             History of rolled Dices
           </Heading>
         </div>
-
         <DiceList></DiceList>
       </div>
     </ChakraProvider>
