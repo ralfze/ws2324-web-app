@@ -32,7 +32,9 @@ public class DiceController {
 		if (!diceList.isEmpty()) {
 			return ResponseEntity.ok(diceList);
 		}
-		return ResponseEntity.notFound().build();
+		//return ResponseEntity.notFound().build();
+		// Return empty List
+		return ResponseEntity.ok(diceList);
 	}
 
 	/* CRUD Dice Methods */

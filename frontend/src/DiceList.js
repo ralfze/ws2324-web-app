@@ -41,6 +41,11 @@ const listItems = diceList.map(person =>
 );
 */
 function DiceList() {
+    const renderDiceList = () => {
+        if (!diceList) {
+            return diceList.toReversed().map(dice => <DiceCard dice={dice}>{dice}</DiceCard>);
+        }
+    }
     // Dice list of the GET request
     const [diceList, setDiceList] = useState([]);
     const baseURL = "http://localhost:8081/dices";
@@ -48,16 +53,19 @@ function DiceList() {
     useEffect(() => {
         axios.get(baseURL)
             .then(
-                (response) => { setDiceList(response.data); console.log(response.data);}
+                (response) => {
+                    setDiceList(response.data);
+                    console.log(response.data);
+                }
             );
     }, [])
-    //.catch(err => { console.log(err); });
+        //.catch(err => { console.log(err); });
 
-    if (!diceList) return null;
+    //if (!diceList) return null;
 
     return (
         <SimpleGrid columns={1} spacing={4}>
-            {diceList.toReversed().map(dice => <DiceCard dice={dice}>{dice}</DiceCard>)}
+            {renderDiceList()}
         </SimpleGrid>
     );
 }
