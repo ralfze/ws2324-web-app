@@ -4,42 +4,6 @@ import DiceCard from './dice-card/DiceCard';
 import { useState, useEffect } from 'react';
 import { SimpleGrid } from '@chakra-ui/react'
 
-
-
-
-// Example Objects of a Dice List
-/*
-const diceList = [
-    {
-        "id": "1",
-        "sizeOfTheDice": "6",
-        "rolleNumber": 3,
-        "message": "This is a message",
-        "created": "2023-01-01",
-        "modified": "2023-01-01"
-    },
-    {
-        "id": "2",
-        "sizeOfTheDice": "6",
-        "rolleNumber": 6,
-        "message": "This is a message",
-        "created": "2023-01-01",
-        "modified": "2023-01-01"
-    },
-    {
-        "id": "3",
-        "sizeOfTheDice": "6",
-        "rolleNumber": 2,
-        "message": "This is a message",
-        "created": "2023-01-01",
-        "modified": "2023-01-01"
-    }
-];
-
-const listItems = diceList.map(person =>
-    <DiceCard>{person}</DiceCard>
-);
-*/
 function DiceList() {
     const renderDiceList = () => {
         if (diceList) {
