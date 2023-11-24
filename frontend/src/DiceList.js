@@ -43,7 +43,7 @@ const listItems = diceList.map(person =>
 function DiceList() {
     const renderDiceList = () => {
         if (diceList) {
-            return diceList.toReversed().map(dice => <DiceCard key={dice.id} dice={dice}>{dice}</DiceCard>);
+            return diceList.toReversed().map(dice => <DiceCard tag={'div'} key={dice.id} dice={dice}>{dice}</DiceCard>);
         }
     }
     // Dice list of the GET request

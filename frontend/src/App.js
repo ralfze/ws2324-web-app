@@ -21,7 +21,7 @@ function App() {
           (response) => {
             console.log(response);
             // Update page
-            window.location.reload(false); 
+            window.location.reload(false);
           }
         );
 
@@ -35,7 +35,6 @@ function App() {
           </Heading>
         </header>
         <div className="history-header">
-
           <Card>
             <CardHeader>
               <Heading>
@@ -45,27 +44,29 @@ function App() {
             <CardBody>
               <Text py='2'>
                 Size of the dice:
-                <NumberInput defaultValue={6} min={2} max={1000} value={value} onChange={(newValue) => setValue(newValue)}>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
               </Text>
+              <NumberInput defaultValue={6} min={2} max={1000} value={value} onChange={(newValue) => setValue(newValue)}>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
             </CardBody>
             <CardFooter>
-              <Button variant='solid' colorScheme='blue' onClick={() => handleClick(value) }>
+              <Button variant='solid' colorScheme='blue' onClick={() => handleClick(value)}>
                 Roll
               </Button>
             </CardFooter>
           </Card>
         </div>
+
         <div className="history-header">
           <Heading>
             History of rolled Dices
           </Heading>
         </div>
+
         <DiceList></DiceList>
       </div>
     </ChakraProvider>

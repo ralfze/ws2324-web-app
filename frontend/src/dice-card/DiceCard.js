@@ -6,9 +6,9 @@ import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepp
 
 function handleClick() {
     alert('You clicked me!');
-  }
+}
 
-function DiceCard({dice}) {
+function DiceCard({ dice }) {
     return (
         <Card
             direction={{ base: 'column', sm: 'row' }}
@@ -19,7 +19,7 @@ function DiceCard({dice}) {
                 objectFit='cover'
                 maxW={{ base: '50%', sm: '256px' }}
                 src={diceimg}
-                alt='Caffe Latte'
+                alt='Dice Image'
             />
 
             <Stack>
@@ -30,16 +30,17 @@ function DiceCard({dice}) {
                         Rolled Number: {dice.rolledNumber}
                     </Text>
 
-                    <Text py='2'>
+                    <Text py='2' tag={'div'}>
                         Size of the dice:
-                        <NumberInput defaultValue={dice.sizeOfTheDice} min={2} max={1000}>
-                            <NumberInputField />
-                            <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                            </NumberInputStepper>
-                        </NumberInput>
                     </Text>
+                    <NumberInput tag={'div'} defaultValue={dice.sizeOfTheDice} min={2} max={1000}>
+                        <NumberInputField tag={'div'} />
+                        <NumberInputStepper tag={'div'}>
+                            <NumberIncrementStepper tag={'div'} />
+                            <NumberDecrementStepper tag={'div'} />
+                        </NumberInputStepper>
+                    </NumberInput>
+
 
                     <Text py='2'>
                         Message: {dice.message}
@@ -53,9 +54,8 @@ function DiceCard({dice}) {
                         Created: {dice.created}
                     </Text>
                 </CardBody>
-
                 <CardFooter>
-                    <Button variant='solid' colorScheme='blue' onClick={handleClick}>
+                    <Button variant='solid' colorScheme='blue' onClick={handleClick} tag={'div'}>
                         Re-roll
                     </Button>
                 </CardFooter>
