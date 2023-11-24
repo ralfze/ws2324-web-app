@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Card, CardBody, CardFooter, Text, Image, Stack, Heading, Button } from '@chakra-ui/react'
 import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from '@chakra-ui/react'
 import { DeleteIcon } from '@chakra-ui/icons'
-import { Flex, Spacer, VStack } from '@chakra-ui/react'
+import { Flex, Spacer, VStack, ButtonGroup } from '@chakra-ui/react'
 
 
 function DiceCard({ dice, baseURL, updateDiceList }) {
@@ -62,38 +62,39 @@ function DiceCard({ dice, baseURL, updateDiceList }) {
         >
             <Image
                 objectFit='cover'
-                maxW={{ base: '50%', sm: '256px' }}
+                maxW={{ base: '20%', sm: '256px' }}
                 src={diceimg}
                 alt='Dice Image'
             />
 
-            {!deleteClicked ? <Stack>
-                <CardBody>
+            {!deleteClicked ? <Stack spacing='2' align='stretch' direction='column'>
+                <CardBody align='left' >
                     <Flex>
-                        <VStack>
+                        <VStack align='left'>
                             <Heading size='md'>Dice:</Heading>
                             <Heading size='md'>{dice.id}</Heading>
                         </VStack>
                         <Spacer />
-                        <Button variant='solid' colorScheme='blue' onClick={handleDelete}>
+                        <Button align='right' variant='solid' colorScheme='blue' onClick={handleDelete}>
                             <DeleteIcon />
                         </Button>
                     </Flex>
                     <Text py='2'>
                         Rolled Number: {dice.rolledNumber}
                     </Text>
-
-                    <Text py='2' tag={'div'}>
-                        Size of the dice:
-                    </Text>
-                    <NumberInput tag={'div'} value={sizeOfTheDice} min={2} max={1000} onChange={(newVal) => setSizeOfTheDice(newVal)}>
-                        <NumberInputField tag={'div'} />
-                        <NumberInputStepper tag={'div'}>
-                            <NumberIncrementStepper tag={'div'} />
-                            <NumberDecrementStepper tag={'div'} />
-                        </NumberInputStepper>
-                    </NumberInput>
-
+                    <Flex align='left' >
+                        <Text py='2'>
+                            Size of the dice:
+                        </Text>
+                        <Spacer />
+                        <NumberInput value={sizeOfTheDice} min={2} max={1000} onChange={(newVal) => setSizeOfTheDice(newVal)} maxW={24}>
+                            <NumberInputField />
+                            <NumberInputStepper >
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                            </NumberInputStepper>
+                        </NumberInput>
+                    </Flex>
 
                     <Text py='2'>
                         Message: {dice.message}
@@ -117,18 +118,14 @@ function DiceCard({ dice, baseURL, updateDiceList }) {
                 <Stack>
                     <CardBody>
                         <Text py='2'>Do you want to delete the dice</Text>
-                        <Spacer />
-                        <Flex>
-                            <Spacer />
+                        <ButtonGroup gap='2'>
                             <Button variant='solid' colorScheme='red' onClick={handleDiceDeletion}>
                                 Yes
                             </Button>
-                            <Spacer />
                             <Button variant='solid' colorScheme='blue' onClick={handleDelete}>
                                 No
                             </Button>
-                            <Spacer />
-                        </Flex>
+                        </ButtonGroup>
                     </CardBody>
                     <CardFooter></CardFooter>
                 </Stack>
