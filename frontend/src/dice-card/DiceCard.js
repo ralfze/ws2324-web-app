@@ -9,21 +9,21 @@ import { DeleteIcon } from '@chakra-ui/icons'
 import { Flex, Spacer, VStack } from '@chakra-ui/react'
 
 
-function DiceCard({ dice, baseURL }) {
+function DiceCard({ dice, baseURL, updateDiceList }) {
     // Function to handle Reroll
     function handleReroll() {
         //alert('You clicked me!');
-        axios.update(baseURL + '/' + dice.id)
+        axios.put(baseURL + '/' + dice.id + '/reroll?sizeOfTheDice=' + sizeOfTheDice)
             .then(
                 (response) => {
                     // console.log(response.data);
                     console.log(response.data);
-                    console.log("Dice id: " + dice.id + " deleted");
+                    updateDiceList();
                 })
             .catch((err) => {
                 // console.log(err);
                 if (err.response.status === 404) {
-                    console.log("No dice was found.");
+                    console.log("Reroll error.");
                 }
             })
     }
@@ -40,6 +40,7 @@ function DiceCard({ dice, baseURL }) {
                     // console.log(response.data);
                     console.log(response.data);
                     console.log("Dice id: " + dice.id + " deleted");
+                    updateDiceList();
                 })
             .catch((err) => {
                 // console.log(err);
@@ -52,7 +53,7 @@ function DiceCard({ dice, baseURL }) {
 
     // Status of the delete clicked
     const [deleteClicked, setDeleteClicked] = useState(false);
-    const [sizeOfTheDice, setSizeOfTheDice] = dice.sizeOfTheDice;
+    const [sizeOfTheDice, setSizeOfTheDice] = useState(dice.sizeOfTheDice);
     return (
         <Card
             direction={{ base: 'column', sm: 'row' }}
@@ -85,7 +86,7 @@ function DiceCard({ dice, baseURL }) {
                     <Text py='2' tag={'div'}>
                         Size of the dice:
                     </Text>
-                    <NumberInput tag={'div'} defaultValue={sizeOfTheDice} min={2} max={1000} onChange={(newVal) => setSizeOfTheDice(newVal)}>
+                    <NumberInput tag={'div'} value={sizeOfTheDice} min={2} max={1000} onChange={(newVal) => setSizeOfTheDice(newVal)}>
                         <NumberInputField tag={'div'} />
                         <NumberInputStepper tag={'div'}>
                             <NumberIncrementStepper tag={'div'} />

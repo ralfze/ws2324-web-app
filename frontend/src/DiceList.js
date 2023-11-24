@@ -10,12 +10,11 @@ function DiceList() {
     const baseURL = "http://localhost:8081/dices";
     const renderDiceList = () => {
         if (diceList) {
-            return diceList.toReversed().map(dice => <DiceCard tag={'div'} key={dice.id} dice={dice} baseURL={baseURL}>{dice}</DiceCard>);
+            return diceList.toReversed().map(dice => <DiceCard tag={'div'} key={dice.id} dice={dice} baseURL={baseURL} updateDiceList={getDiceList}>{dice}</DiceCard>);
         }
     }
 
-    // GET request for dice list
-    useEffect(() => {
+    const getDiceList = () => {
         axios.get(baseURL)
             .then(
                 (response) => {
@@ -28,7 +27,9 @@ function DiceList() {
                     console.log("No dice was found.");
                 }
             })
-    }, [])
+    };
+    // GET request for dice list
+    useEffect(getDiceList, [])
 
 
     //if (!diceList) return null;

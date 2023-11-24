@@ -80,14 +80,10 @@ public class DiceController {
 	@WithSpan
 	@PutMapping("/dices/{id}/reroll")
 	ResponseEntity<Dice> RerollDice(@PathVariable String id,
-			@SpanAttribute("sizeOfTheDice") @RequestParam(required = false) String sizeOfTheDice) {
+			@SpanAttribute("sizeOfTheDice") @RequestParam(required = true) int sizeOfTheDice) {
 		Dice existingItem = diceRepository.findById(id).orElse(null);
 		if (existingItem != null) {
-			if (sizeOfTheDice != null) {
-				existingItem.reroll(sizeOfTheDice);
-			} else {
-				existingItem.reroll();
-			}
+			existingItem.reroll(sizeOfTheDice);
 			existingItem.updateTime();
 			diceRepository.save(existingItem);
 			return ResponseEntity.status(HttpStatus.OK).body(existingItem);
