@@ -6,9 +6,9 @@ Backend communicates with a mongoDB database server.
 Backend communicates with REST.
 
 ## Accessible URLs
-dice-web-backend: http://localhost:8081
-dice-web-backend-actuator: http://localhost:8081/actuator
-dice-web-backend-api-docs: http://localhost:8081/api-docs
+dice-web-backend: http://localhost:8081 \
+dice-web-backend-actuator: http://localhost:8081/actuator \
+dice-web-backend-api-docs: http://localhost:8081/api-docs \
 dice-web-backend-swagger: http://localhost:8081/swagger-ui/index.html
 
 dice-web-frontend: http://localhost:3000
