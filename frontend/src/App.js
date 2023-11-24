@@ -11,20 +11,22 @@ import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepp
 
 function App() {
   const [value, setValue] = useState(6)
+  const [renderDiceListKey, setRenderDiceListKey] = useState(0)
 
   const baseURL = "http://localhost:8081/dices";
   function handleClick(sizeOfTheDice) {
     //alert('You clicked me!' + sizeOfTheDice);
     if (sizeOfTheDice !== null)
-      axios.post(baseURL + "?size=" + sizeOfTheDice)
+      axios.post(`${baseURL}?size=${sizeOfTheDice}`)
         .then(
           (response) => {
             console.log(response);
-            // Update page
-            window.location.reload(false);
-            //forceUpdate();
-          }
-        );
+            // Update render key to update the dice list
+            setRenderDiceListKey((renderDiceListKey) => renderDiceListKey + 1);
+          })
+        .catch((error) => {
+          console.error('Error while making the API call:', error);
+        });
   }
 
   return (
@@ -67,7 +69,7 @@ function App() {
             History of rolled Dices
           </Heading>
         </div>
-        <DiceList></DiceList>
+        <DiceList key={renderDiceListKey}></DiceList>
       </div>
     </ChakraProvider>
   );

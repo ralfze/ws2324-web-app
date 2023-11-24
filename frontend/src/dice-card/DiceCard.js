@@ -13,7 +13,7 @@ function DiceCard({ dice, baseURL, updateDiceList }) {
     // Function to handle Reroll
     function handleReroll() {
         //alert('You clicked me!');
-        axios.put(baseURL + '/' + dice.id + '/reroll?sizeOfTheDice=' + sizeOfTheDice)
+        axios.put(`${baseURL}/${dice.id}/reroll?sizeOfTheDice=${sizeOfTheDice}`)
             .then(
                 (response) => {
                     // console.log(response.data);
