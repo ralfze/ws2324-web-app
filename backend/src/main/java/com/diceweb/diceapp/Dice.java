@@ -36,8 +36,13 @@ public class Dice {
     private int rollTheDice(int sizeOfTheDice) {
         return (new Random().nextInt(sizeOfTheDice) + 1);
     }
-    public void reroll(){
+
+    public void reroll() {
         this.rolledNumber = this.rollTheDice(this.sizeOfTheDice);
+    }
+
+    public void reroll(int sizeOfTheDice) {
+        this.rolledNumber = this.rollTheDice(sizeOfTheDice);
     }
 
     private String createMessage(int rolledNumber, int sizeOfTheDice) {
@@ -51,7 +56,7 @@ public class Dice {
         return msg;
     }
 
-    public void updateTime(){
+    public void updateTime() {
         this.modified = Instant.now();
     }
 

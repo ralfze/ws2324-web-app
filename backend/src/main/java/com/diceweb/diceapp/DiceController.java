@@ -32,7 +32,7 @@ public class DiceController {
 		if (!diceList.isEmpty()) {
 			return ResponseEntity.ok(diceList);
 		}
-		//return ResponseEntity.notFound().build();
+		// return ResponseEntity.notFound().build();
 		// Return empty List
 		return ResponseEntity.ok(diceList);
 	}
@@ -79,10 +79,15 @@ public class DiceController {
 	 */
 	@WithSpan
 	@PutMapping("/dices/{id}/reroll")
-	ResponseEntity<Dice> UpdateDice(@PathVariable String id) {
+	ResponseEntity<Dice> RerollDice(@PathVariable String id,
+			@SpanAttribute("sizeOfTheDice") @RequestParam(required = false) String sizeOfTheDice) {
 		Dice existingItem = diceRepository.findById(id).orElse(null);
 		if (existingItem != null) {
-			existingItem.reroll();
+			if (sizeOfTheDice != null) {
+				existingItem.reroll(sizeOfTheDice);
+			} else {
+				existingItem.reroll();
+			}
 			existingItem.updateTime();
 			diceRepository.save(existingItem);
 			return ResponseEntity.status(HttpStatus.OK).body(existingItem);

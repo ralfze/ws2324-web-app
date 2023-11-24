@@ -132,4 +132,5 @@ npm run build
 
 ### Components used for UI
 npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
-npm install axios
+npm i @chakra-ui/icons
+npm i axios

@@ -5,30 +5,31 @@ import { useState, useEffect } from 'react';
 import { SimpleGrid } from '@chakra-ui/react'
 
 function DiceList() {
-    const renderDiceList = () => {
-        if (diceList) {
-            return diceList.toReversed().map(dice => <DiceCard tag={'div'} key={dice.id} dice={dice}>{dice}</DiceCard>);
-        }
-    }
     // Dice list of the GET request
     const [diceList, setDiceList] = useState([]);
     const baseURL = "http://localhost:8081/dices";
+    const renderDiceList = () => {
+        if (diceList) {
+            return diceList.toReversed().map(dice => <DiceCard tag={'div'} key={dice.id} dice={dice} baseURL={baseURL}>{dice}</DiceCard>);
+        }
+    }
+
     // GET request for dice list
     useEffect(() => {
         axios.get(baseURL)
             .then(
                 (response) => {
                     // console.log(response.data);
-                    setDiceList(response.data); 
+                    setDiceList(response.data);
                 })
-            .catch((err)=>{
+            .catch((err) => {
                 // console.log(err);
-                if(err.response.status === 404){
+                if (err.response.status === 404) {
                     console.log("No dice was found.");
                 }
-            })     
+            })
     }, [])
-       
+
 
     //if (!diceList) return null;
 

@@ -1,14 +1,58 @@
 import diceimg from '../img/dice_bg.png';
 import '../App.css';
+import axios from 'axios';
+import { useState } from 'react';
 
 import { Card, CardBody, CardFooter, Text, Image, Stack, Heading, Button } from '@chakra-ui/react'
 import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from '@chakra-ui/react'
+import { DeleteIcon } from '@chakra-ui/icons'
+import { Flex, Spacer, VStack } from '@chakra-ui/react'
 
-function handleClick() {
-    alert('You clicked me!');
-}
 
-function DiceCard({ dice }) {
+function DiceCard({ dice, baseURL }) {
+    // Function to handle Reroll
+    function handleReroll() {
+        //alert('You clicked me!');
+        axios.update(baseURL + '/' + dice.id)
+            .then(
+                (response) => {
+                    // console.log(response.data);
+                    console.log(response.data);
+                    console.log("Dice id: " + dice.id + " deleted");
+                })
+            .catch((err) => {
+                // console.log(err);
+                if (err.response.status === 404) {
+                    console.log("No dice was found.");
+                }
+            })
+    }
+
+    // Function for Status of Bin Button
+    function handleDelete() {
+        setDeleteClicked(!deleteClicked);
+    }
+
+    function handleDiceDeletion() {
+        axios.delete(baseURL + '/' + dice.id)
+            .then(
+                (response) => {
+                    // console.log(response.data);
+                    console.log(response.data);
+                    console.log("Dice id: " + dice.id + " deleted");
+                })
+            .catch((err) => {
+                // console.log(err);
+                if (err.response.status === 404) {
+                    console.log("No dice was found.");
+                }
+            })
+    }
+
+
+    // Status of the delete clicked
+    const [deleteClicked, setDeleteClicked] = useState(false);
+    const [sizeOfTheDice, setSizeOfTheDice] = dice.sizeOfTheDice;
     return (
         <Card
             direction={{ base: 'column', sm: 'row' }}
@@ -22,10 +66,18 @@ function DiceCard({ dice }) {
                 alt='Dice Image'
             />
 
-            <Stack>
+            {!deleteClicked ? <Stack>
                 <CardBody>
-                    <Heading size='md'>Dice d</Heading>
-
+                    <Flex>
+                        <VStack>
+                            <Heading size='md'>Dice:</Heading>
+                            <Heading size='md'>{dice.id}</Heading>
+                        </VStack>
+                        <Spacer />
+                        <Button variant='solid' colorScheme='blue' onClick={handleDelete}>
+                            <DeleteIcon />
+                        </Button>
+                    </Flex>
                     <Text py='2'>
                         Rolled Number: {dice.rolledNumber}
                     </Text>
@@ -33,7 +85,7 @@ function DiceCard({ dice }) {
                     <Text py='2' tag={'div'}>
                         Size of the dice:
                     </Text>
-                    <NumberInput tag={'div'} defaultValue={dice.sizeOfTheDice} min={2} max={1000}>
+                    <NumberInput tag={'div'} defaultValue={sizeOfTheDice} min={2} max={1000} onChange={(newVal) => setSizeOfTheDice(newVal)}>
                         <NumberInputField tag={'div'} />
                         <NumberInputStepper tag={'div'}>
                             <NumberIncrementStepper tag={'div'} />
@@ -55,11 +107,31 @@ function DiceCard({ dice }) {
                     </Text>
                 </CardBody>
                 <CardFooter>
-                    <Button variant='solid' colorScheme='blue' onClick={handleClick} tag={'div'}>
+                    <Button variant='solid' colorScheme='blue' onClick={handleReroll}>
                         Re-roll
                     </Button>
                 </CardFooter>
             </Stack>
+                :
+                <Stack>
+                    <CardBody>
+                        <Text py='2'>Do you want to delete the dice</Text>
+                        <Spacer />
+                        <Flex>
+                            <Spacer />
+                            <Button variant='solid' colorScheme='red' onClick={handleDiceDeletion}>
+                                Yes
+                            </Button>
+                            <Spacer />
+                            <Button variant='solid' colorScheme='blue' onClick={handleDelete}>
+                                No
+                            </Button>
+                            <Spacer />
+                        </Flex>
+                    </CardBody>
+                    <CardFooter></CardFooter>
+                </Stack>
+            }
         </Card>
     );
 }
