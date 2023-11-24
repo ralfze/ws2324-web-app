@@ -7,25 +7,27 @@ import { Heading } from '@chakra-ui/react'
 import axios from 'axios';
 import { Card, CardHeader, CardBody, CardFooter, Text } from '@chakra-ui/react'
 import { NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button } from '@chakra-ui/react'
-
+import { Slider, SliderFilledTrack, SliderTrack, SliderThumb, HStack, Spacer } from '@chakra-ui/react'
 
 function App() {
   const [value, setValue] = useState(6)
+  const [renderDiceListKey, setRenderDiceListKey] = useState(0)
 
   const baseURL = "http://localhost:8081/dices";
   function handleClick(sizeOfTheDice) {
-    //alert('You clicked me!' + sizeOfTheDice);
     if (sizeOfTheDice !== null)
-      axios.post(baseURL + "?size=" + sizeOfTheDice)
+      axios.post(`${baseURL}?size=${sizeOfTheDice}`)
         .then(
           (response) => {
             console.log(response);
-            // Update page
-            window.location.reload(false);
-          }
-        );
-
+            // Update render key to update the dice list
+            setRenderDiceListKey((renderDiceListKey) => renderDiceListKey + 1);
+          })
+        .catch((error) => {
+          console.error('Error while making the API call:', error);
+        });
   }
+
   return (
     <ChakraProvider>
       <div className="App">
@@ -45,17 +47,33 @@ function App() {
               <Text py='2'>
                 Size of the dice:
               </Text>
-              <NumberInput defaultValue={6} min={2} max={1000} value={value} onChange={(newValue) => setValue(newValue)}>
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
+              <HStack>
+                <NumberInput defaultValue={6} min={2} max={1000} value={value} onChange={(newValue) => setValue(newValue)} maxW='100px'>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                <Spacer />
+                <Slider
+                  flex='100'
+                  focusThumbOnChange={false}
+                  value={value}
+                  onChange={(newValue) => setValue(newValue)}
+                  min={2}
+                  max={1000}
+                >
+                  <SliderTrack>
+                    <SliderFilledTrack />
+                  </SliderTrack>
+                  <SliderThumb fontSize='sm' boxSize='32px' children={value} />
+                </Slider>
+              </HStack>
             </CardBody>
             <CardFooter>
               <Button variant='solid' colorScheme='blue' onClick={() => handleClick(value)}>
-                Roll
+                &nbsp;Roll&nbsp;
               </Button>
             </CardFooter>
           </Card>
@@ -66,8 +84,7 @@ function App() {
             History of rolled Dices
           </Heading>
         </div>
-
-        <DiceList></DiceList>
+        <DiceList key={renderDiceListKey}></DiceList>
       </div>
     </ChakraProvider>
   );
