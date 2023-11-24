@@ -118,7 +118,7 @@ To run the application and its associated PostgreSQL database using Docker Compo
 ./mvnw spring-boot:run
 
 ### Delete Docker Container after stop
-docker compose up --force-recreate
+docker compose up
 docker compose down
 #### Delete Docker Images
 docker image rm dice-web-app/backend && docker image rm dice-web-app/frontend
