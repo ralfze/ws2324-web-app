@@ -1,4 +1,4 @@
-# TODO List API Documentation
+# DICE List API Documentation
 
 # dice-web-server
 A dice web server in Springboot with react frontend.
@@ -19,46 +19,57 @@ jaeger-service: http://localhost:16686
 
 ## Overview
 
-This repository contains the source code for a RESTful API that manages a list of TODO items. The API provides endpoints for listing, creating, updating, and deleting TODO items.
+This repository contains the source code for a RESTful API that manages a list of DICE items. The API provides endpoints for listing, creating, updating, and deleting DICE items.
 
 ## API Endpoints
 
-### Get All TODO Items
+### Get All DICE Items
 
-- **URL:** `/todos`
+- **URL:** `/dices`
 - **HTTP Method:** GET
-- **Description:** Retrieve a list of all TODO items.
+- **Description:** Retrieve a list of all DICE items.
 
-### Get TODO Item by ID
+### Get DICE Item by ID
 
-- **URL:** `/todos/{id}`
+- **URL:** `/dices/{id}`
 - **HTTP Method:** GET
-- **Description:** Retrieve a specific TODO item by its ID.
+- **Description:** Retrieve a specific DICE item by its ID.
 
-### Create TODO Item
+### Create DICE Item
 
-- **URL:** `/todos/{title}`
+- **URL:** `/dices/`
 - **HTTP Method:** POST
-- **Description:** Create a new TODO item with the given title.
+- **Description:** Create a new DICE item with the given title.
 
-### Update TODO Item
+### Update DICE Item
 
-- **URL:** `/todos/{id}/{title}`
+- **URL:** `/dices/{id}?message=`
 - **HTTP Method:** PUT
-- **Description:** Update an existing TODO item with the specified ID by setting its title to the new value.
+- **Description:** Update an existing DICE item with the specified ID. Allows to change via Parameter "?message=".
 
-### Delete TODO Item
+### Delete DICE Item
 
-- **URL:** `/todos/{id}`
+- **URL:** `/dices/{id}`
 - **HTTP Method:** DELETE
-- **Description:** Delete a TODO item with the specified ID.
+- **Description:** Delete a DICE item with the specified ID.
+
+### Update DICE Item
+
+- **URL:** `/dices/{id}/reroll`
+- **HTTP Method:** PUT
+- **Description:** Update an existing DICE item with the specified ID. Allows to reroll the last roll.
 
 ## Data Model
 
-The API uses a data model for TODO items with the following attributes:
+The API uses a data model for DICE items with the following attributes:
 
-- `id` (Integer): The unique identifier of the TODO item.
-- `title` (String): The title or description of the TODO item.
+- `id` (Integer): The unique identifier of the DICE item.
+- `rolledNumber` (int): The rolled Number of the last roll.
+- `sizeOfTheDice` (int): The rolled Number of the last roll.
+- `created` (Instant): The date/time when the roll was created.
+- `modified` (Instant): The date/time of the new roll.
+- `message` (String): The message of the roll.
+
 
 ## Prerequisites
 
@@ -66,7 +77,7 @@ Before running the API, make sure you have the following prerequisites installed
 
 - Java Development Kit (JDK)
 - Spring Boot framework
-- A database (e.g., H2, MySQL) if the `TodoRepository` is configured to use one
+- A database (e.g., H2, MySQL) if the `DiceRepository` is configured to use one
 
 ## Running the Application
 
@@ -98,6 +109,7 @@ To run the application and its associated PostgreSQL database using Docker Compo
 
 6. Use your preferred API client (e.g., Postman, curl) to interact with the API endpoints as described in the documentation.
 
+# Some Information
 
 ## Compile Backend
 ./mvnw clean install 
