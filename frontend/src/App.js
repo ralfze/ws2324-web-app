@@ -34,7 +34,7 @@ function App() {
             Dice-Web-App
           </Heading>
         </header>
-        <p className="history-header">
+        <div className="history-header">
 
           <Card>
             <CardHeader>
@@ -60,12 +60,12 @@ function App() {
               </Button>
             </CardFooter>
           </Card>
-        </p>
-        <p className="history-header">
+        </div>
+        <div className="history-header">
           <Heading>
             History of rolled Dices
           </Heading>
-        </p>
+        </div>
         <DiceList></DiceList>
       </div>
     </ChakraProvider>

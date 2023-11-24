@@ -42,8 +42,8 @@ const listItems = diceList.map(person =>
 */
 function DiceList() {
     const renderDiceList = () => {
-        if (!diceList) {
-            return diceList.toReversed().map(dice => <DiceCard dice={dice}>{dice}</DiceCard>);
+        if (diceList) {
+            return diceList.toReversed().map(dice => <DiceCard key={dice.id} dice={dice}>{dice}</DiceCard>);
         }
     }
     // Dice list of the GET request
@@ -54,12 +54,17 @@ function DiceList() {
         axios.get(baseURL)
             .then(
                 (response) => {
-                    setDiceList(response.data);
-                    console.log(response.data);
+                    // console.log(response.data);
+                    setDiceList(response.data); 
+                })
+            .catch((err)=>{
+                // console.log(err);
+                if(err.response.status === 404){
+                    console.log("No dice was found.");
                 }
-            );
+            })     
     }, [])
-        //.catch(err => { console.log(err); });
+       
 
     //if (!diceList) return null;
 
