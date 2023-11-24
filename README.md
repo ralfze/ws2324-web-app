@@ -5,6 +5,18 @@ A dice web server in Springboot with react frontend.
 Backend communicates with a mongoDB database server.
 Backend communicates with REST.
 
+## Accessible URLs
+dice-web-backend: http://localhost:8081
+dice-web-backend-actuator: http://localhost:8081/actuator
+dice-web-backend-api-docs: http://localhost:8081/api-docs
+dice-web-backend-swagger: http://localhost:8081/swagger-ui/index.html
+
+dice-web-frontend: http://localhost:3000
+
+mongo: http://localhost:27017
+
+jaeger-service: http://localhost:16686
+
 ## Overview
 
 This repository contains the source code for a RESTful API that manages a list of TODO items. The API provides endpoints for listing, creating, updating, and deleting TODO items.
