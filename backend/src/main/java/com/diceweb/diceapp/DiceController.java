@@ -18,7 +18,8 @@ import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 
 // Allow CORS from frontend
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://3000-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io/")
 @RestController
 public class DiceController {
 	// mongoDB Repository

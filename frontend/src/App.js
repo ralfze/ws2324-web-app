@@ -13,7 +13,9 @@ function App() {
   const [value, setValue] = useState(6)
   const [renderDiceListKey, setRenderDiceListKey] = useState(0)
 
-  const baseURL = "http://localhost:8081/dices";
+  //const baseURL = "http://localhost:8081/dices";
+  const baseURL = "https://8081-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io/dices";
+  //const baseURL = "https://frontend:8081/dices";
   function handleClick(sizeOfTheDice) {
     if (sizeOfTheDice !== null)
       axios.post(`${baseURL}?size=${sizeOfTheDice}`)
@@ -84,7 +86,7 @@ function App() {
             History of rolled Dices
           </Heading>
         </div>
-        <DiceList key={renderDiceListKey}></DiceList>
+        <DiceList key={renderDiceListKey} baseURL={baseURL}></DiceList>
       </div>
     </ChakraProvider>
   );

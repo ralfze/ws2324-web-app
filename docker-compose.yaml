@@ -11,7 +11,8 @@ services:
       - frontend
     ports:
       - "3000:3000"
-    #environment:
+    environment:
+      baseURL: ${GITPOD_WORKSPACE_URL}
       #OTEL_SERVICE_NAME: backend-otel
       #OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
       #OTEL_TRACES_EXPORTER: jaeger

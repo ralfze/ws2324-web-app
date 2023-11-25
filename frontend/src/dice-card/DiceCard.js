@@ -34,7 +34,7 @@ function DiceCard({ dice, baseURL, updateDiceList }) {
     }
 
     function handleDiceDeletion() {
-        axios.delete(baseURL + '/' + dice.id)
+        axios.delete(`${baseURL}/${dice.id}`)
             .then(
                 (response) => {
                     // console.log(response.data);
