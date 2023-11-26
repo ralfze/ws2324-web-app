@@ -13,8 +13,8 @@ function App() {
   const [value, setValue] = useState(6)
   const [renderDiceListKey, setRenderDiceListKey] = useState(0)
 
-  //const baseURL = "http://localhost:8081";
-  const baseURL = "https://8081-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io";
+  const baseURL = "http://localhost:8081";
+  //const baseURL = "https://8081-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io";
   //const baseURL = process.env.BASE_URL;
   function handleClick(sizeOfTheDice) {
     if (sizeOfTheDice !== null)
