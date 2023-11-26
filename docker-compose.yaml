@@ -3,6 +3,7 @@ version: '3.7'
 services:
   frontend:
     image: dice-web-app/frontend:latest
+    #image: razeit01/ws2324-web-app:frontend
     build:  
       context: ./
       dockerfile: ./frontend/Dockerfile
@@ -11,8 +12,8 @@ services:
       - frontend
     ports:
       - "3000:3000"
-    environment:
-      BASE_URL: ${BACKEND_URL}
+    #environment:
+      #BASE_URL: ${BACKEND_URL}
       #OTEL_SERVICE_NAME: backend-otel
       #OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
       #OTEL_TRACES_EXPORTER: jaeger
@@ -22,6 +23,7 @@ services:
 
   backend:
     image: dice-web-app/backend:latest
+    #image: razeit01/ws2324-web-app:backend
     build:  
       context: ./
       dockerfile: ./backend/Dockerfile
@@ -32,7 +34,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      BASE_URL: ${FRONTEND_URL}
+      #BASE_URL: ${FRONTEND_URL}
       SPRING_DATA_MONGODB_URI: mongodb://root:password@mongo:27017/
       SPRING_DATA_MONGODB_DATABASE: dicedb
       OTEL_SERVICE_NAME: backend-otel
@@ -44,6 +46,7 @@ services:
 
   mongo:
     image: mongo:jammy
+    #image: razeit01/ws2324-web-app:mongo
     container_name: mongo
     restart: always
     networks:
@@ -54,20 +57,21 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
 
-  collector:
-    image: otel/opentelemetry-collector:latest
-    command: [ "--config=/etc/otel-collector-config.yaml" ]
-    volumes:
-      - ./otel-config.yaml:/etc/otel-collector-config.yaml
-    networks:
-      - backend
-    ports:
-      - "4317:4317"
-    depends_on:
-      - jaeger-service
+  #collector:
+    #image: otel/opentelemetry-collector:latest
+    #command: [ "--config=/etc/otel-collector-config.yaml" ]
+    #volumes:
+    #  - ./otel-config.yaml:/etc/otel-collector-config.yaml
+    #networks:
+    #  - backend
+    #ports:
+    #  - "4317:4317"
+    #depends_on:
+    #  - jaeger-service
 
   jaeger-service:
     image: jaegertracing/all-in-one:latest
+    #image: razeit01/ws2324-web-app:jaegertracing
     networks:
       - backend
     ports:
