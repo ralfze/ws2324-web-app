@@ -8,7 +8,7 @@ RUN mvn package -DskipTests
 
 # Stage 2: Production-ready image
 FROM eclipse-temurin:17-jdk-jammy
-WORKDIR /app/
+WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 COPY backend/opentelemetry-javaagent.jar opentelemetry-javaagent.jar
 EXPOSE 8080

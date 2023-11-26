@@ -13,12 +13,12 @@ function App() {
   const [value, setValue] = useState(6)
   const [renderDiceListKey, setRenderDiceListKey] = useState(0)
 
-  //const baseURL = "http://localhost:8081/dices";
-  const baseURL = "https://8081-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io/dices";
-  //const baseURL = "https://frontend:8081/dices";
+  //const baseURL = "http://localhost:8081";
+  const baseURL = "https://8081-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io";
+  //const baseURL = process.env.BASE_URL;
   function handleClick(sizeOfTheDice) {
     if (sizeOfTheDice !== null)
-      axios.post(`${baseURL}?size=${sizeOfTheDice}`)
+      axios.post(`${baseURL}/dices?size=${sizeOfTheDice}`, { withCredentials: true })
         .then(
           (response) => {
             console.log(response);

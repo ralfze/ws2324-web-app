@@ -5,7 +5,34 @@ A dice web server in Springboot with react frontend.
 Backend communicates with a mongoDB database server.
 Backend communicates with REST.
 
-## Accessible URLs
+## Needed Pre-Conditions for online development
+1. Change Cross-Origin URL to Frontend URL in file \
+Path: ws2324-web-app/backend/src/main/java/com/diceweb/diceapp/DiceController.java
+
+```java
+File:DiceController.java
+@CrossOrigin(origins = "NEW-URL-FROM-FRONTEND", allowCredentials = "true")
+
+```
+
+2. Change URL for requests in the Frontend to Backend URL in file \
+Path: ws2324-web-app/frontend/src/App.js
+
+```javascript
+File:App.js
+const baseURL = "NEW-URL-TO-BACKEND";
+
+```
+3. Expose PORT of the Backend public
+```bash
+gp ports visibility 8081:public
+```
+
+## Overview
+
+This repository contains the source code for a RESTful API that manages a list of DICE items. The API provides endpoints for listing, creating, updating, and deleting DICE items.
+
+## API Endpoints
 dice-web-backend: http://localhost:8081 \
 dice-web-backend-actuator: http://localhost:8081/actuator \
 dice-web-backend-api-docs: http://localhost:8081/api-docs \
@@ -17,11 +44,6 @@ mongo: http://localhost:27017
 
 jaeger-service: http://localhost:16686
 
-## Overview
-
-This repository contains the source code for a RESTful API that manages a list of DICE items. The API provides endpoints for listing, creating, updating, and deleting DICE items.
-
-## API Endpoints
 
 ### Get All DICE Items
 
@@ -89,6 +111,10 @@ To run the application, follow these steps:
 ### Configuration
 
 You can configure the application by modifying the application properties or configuration files as needed.
+
+## Configure Environment Variables (tested but missing link in apps)
+eval $(gp env -e FRONTEND_URL=`gp url 3000`)
+eval $(gp env -e BACKEND_URL=`gp url 8081`)
 
 ## Usage
 

@@ -14,7 +14,7 @@ function DiceList({baseURL}) {
     }
 
     const getDiceList = () => {
-        axios.get(baseURL)
+        axios.get(`${baseURL}/dices`,{ withCredentials: true })
             .then(
                 (response) => {
                     // console.log(response.data);

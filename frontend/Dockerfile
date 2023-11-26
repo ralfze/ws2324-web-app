@@ -7,7 +7,7 @@ WORKDIR /app/
 # Copy only the necessary files for dependency installation
 COPY frontend/package.json /app/
 COPY frontend/package-lock.json /app/
-COPY frontend/.env.development.local /app/
+#COPY frontend/.env.development.local /app/
 
 # Install dependencies
 RUN npm install
@@ -29,7 +29,7 @@ WORKDIR /app
 COPY --from=build /app/build /app/build
 COPY --from=build /app/package.json /app/
 COPY --from=build /app/package-lock.json /app/
-COPY --from=build /app/.env.development.local /app/
+#COPY --from=build /app/.env.development.local /app/
 
 # Install production dependencies only
 RUN npm install --only=production
