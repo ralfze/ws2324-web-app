@@ -11,7 +11,8 @@ services:
       - frontend
     ports:
       - "3000:3000"
-    #environment:
+    environment:
+      BASE_URL: ${BACKEND_URL}
       #OTEL_SERVICE_NAME: backend-otel
       #OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
       #OTEL_TRACES_EXPORTER: jaeger
@@ -31,6 +32,7 @@ services:
     ports:
       - "8081:8081"
     environment:
+      BASE_URL: ${FRONTEND_URL}
       SPRING_DATA_MONGODB_URI: mongodb://root:password@mongo:27017/
       SPRING_DATA_MONGODB_DATABASE: dicedb
       OTEL_SERVICE_NAME: backend-otel

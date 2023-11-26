@@ -17,8 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import io.opentelemetry.instrumentation.annotations.SpanAttribute;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 
+// Use Variable from environment
+//@Value("#{systemEnvironment['BASE_URL'] ?: 'http://localhost:3000")
+//private String baseURL;
+
 // Allow CORS from frontend
-@CrossOrigin(origins = "http://localhost:3000")
+//System.out.println("BASE URL:"+baseURL);
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://3000-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io/", allowCredentials = "true")
+//@CrossOrigin(origins = baseURL)
 @RestController
 public class DiceController {
 	// mongoDB Repository

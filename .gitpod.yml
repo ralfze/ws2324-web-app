@@ -1,0 +1,33 @@
+# Image of workspace. Learn more: https://www.gitpod.io/docs/configure/workspaces/workspace-image
+image: 
+    file: .gitpod.dockerfile
+
+# List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
+tasks:
+  - name: Reset URL env variables
+    command:
+      gp env -u FRONTEND_URL &&
+      gp env -u BACKEND_URL
+  - name: Create URL env variables
+    command:
+      eval $(gp env -e FRONTEND_URL=`gp url 3000`) &&
+      eval $(gp env -e BACKEND_URL=`gp url 8081`) 
+  - name: Output env variables
+    command:
+      echo $FRONTEND_URL &&
+      echo $BACKEND_URL
+
+# List the ports to expose. Learn more: https://www.gitpod.io/docs/configure/workspaces/ports
+ports:
+  - name: Frontend
+    description: Port 3000 for the frontend
+    port: 3000
+    visibility: private
+    onOpen: open-browser
+  - name: Backend
+    description: Port 8081 for the backend
+    port: 8081
+    visibility: public
+    onOpen: ignore
+
+# Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart

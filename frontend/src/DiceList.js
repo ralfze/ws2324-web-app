@@ -4,10 +4,9 @@ import DiceCard from './dice-card/DiceCard';
 import { useState, useEffect } from 'react';
 import { SimpleGrid } from '@chakra-ui/react'
 
-function DiceList() {
+function DiceList({baseURL}) {
     // Dice list of the GET request
     const [diceList, setDiceList] = useState([]);
-    const baseURL = "http://localhost:8081/dices";
     const renderDiceList = () => {
         if (diceList) {
             return diceList.toReversed().map(dice => <DiceCard tag={'div'} key={dice.id} dice={dice} baseURL={baseURL} updateDiceList={getDiceList}>{dice}</DiceCard>);
@@ -15,7 +14,7 @@ function DiceList() {
     }
 
     const getDiceList = () => {
-        axios.get(baseURL)
+        axios.get(`${baseURL}/dices`,{ withCredentials: true })
             .then(
                 (response) => {
                     // console.log(response.data);

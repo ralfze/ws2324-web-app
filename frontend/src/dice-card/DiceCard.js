@@ -13,7 +13,7 @@ function DiceCard({ dice, baseURL, updateDiceList }) {
     // Function to handle Reroll
     function handleReroll() {
         //alert('You clicked me!');
-        axios.put(`${baseURL}/${dice.id}/reroll?sizeOfTheDice=${sizeOfTheDice}`)
+        axios.put(`${baseURL}/dices/${dice.id}/reroll?sizeOfTheDice=${sizeOfTheDice}`,{ withCredentials: true })
             .then(
                 (response) => {
                     // console.log(response.data);
@@ -34,7 +34,7 @@ function DiceCard({ dice, baseURL, updateDiceList }) {
     }
 
     function handleDiceDeletion() {
-        axios.delete(baseURL + '/' + dice.id)
+        axios.delete(`${baseURL}/dices/${dice.id}`,{ withCredentials: true })
             .then(
                 (response) => {
                     // console.log(response.data);
