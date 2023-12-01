@@ -23,8 +23,8 @@ import io.opentelemetry.instrumentation.annotations.WithSpan;
 
 // Allow CORS from frontend
 //System.out.println("BASE URL:"+baseURL);
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-//@CrossOrigin(origins = "https://3000-ralfze-ws2324webapp-pjfmlslo17m.ws-eu106.gitpod.io/", allowCredentials = "true")
+//@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = "https://3000-ralfze-ws2324webapp-3rywyu2j56q.ws-eu106.gitpod.io", allowCredentials = "true")
 //@CrossOrigin(origins = baseURL)
 @RestController
 public class DiceController {

@@ -12,12 +12,12 @@ services:
       - frontend
     ports:
       - "3000:3000"
-    #environment:
+    environment:
       #BASE_URL: ${BACKEND_URL}
-      #OTEL_SERVICE_NAME: backend-otel
-      #OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
-      #OTEL_TRACES_EXPORTER: jaeger
-      #OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-service:14250
+      OTEL_SERVICE_NAME: frontend-otel
+      # OTEL_EXPORTER_OTLP_ENDPOINT:http://collector:4318
+      OTEL_TRACES_EXPORTER: jaeger
+      OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-service:14250
     depends_on:
       - backend
 
